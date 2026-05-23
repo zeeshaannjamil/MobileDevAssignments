@@ -63,23 +63,14 @@ class _BrandedLoginPageState extends State<BrandedLoginPage> {
             // Header Branding Section
             Column(
               children: <Widget>[
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 500),
+                Container(
                   padding: const EdgeInsets.all(20.0),
                   decoration: BoxDecoration(
                     color: colors.primary.withOpacity(0.08),
                     borderRadius: BorderRadius.circular(24.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colors.primary.withOpacity(0.04),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      )
-                    ],
                   ),
                   child: Image.asset(
                     'assets/diamond.png',
-                    color: colors.primary,
                     height: 65,
                   ),
                 ),
@@ -203,7 +194,6 @@ class _BrandedLoginPageState extends State<BrandedLoginPage> {
                     style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5),
                   ),
                   onPressed: () {
-                    // Smooth Transition to the Portal Screen upon Authentication
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const PortalMainScreen()),
@@ -219,7 +209,6 @@ class _BrandedLoginPageState extends State<BrandedLoginPage> {
   }
 }
 
-// MDC-102 Screen showcasing the newly added Top App Bar and Grid Scaffold
 class PortalMainScreen extends StatelessWidget {
   const PortalMainScreen({Key? key}) : super(key: key);
 
@@ -229,16 +218,13 @@ class PortalMainScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      // --- THE NEW TOP APP BAR REQUIREMENT ---
       appBar: AppBar(
         backgroundColor: colors.surface,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.menu_open_rounded, color: colors.primary),
-          onPressed: () {
-            // Action for Navigation Drawer placeholder
-          },
+          onPressed: () {},
         ),
         title: Row(
           mainAxisSize: MainAxisSize.min,
@@ -257,8 +243,9 @@ class PortalMainScreen extends StatelessWidget {
           ],
         ),
         actions: <Widget>[
+          // FIXED: Changed to valid Material Icon name
           IconButton(
-            icon: Icon(Icons.search_purple_button_rounded, color: colors.primary),
+            icon: Icon(Icons.search_rounded, color: colors.primary),
             onPressed: () {},
           ),
           IconButton(
@@ -269,7 +256,6 @@ class PortalMainScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
-        // Grid View placeholder requested by MDC 102
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
