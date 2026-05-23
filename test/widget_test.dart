@@ -1,30 +1,23 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:mobile_one/main.dart';
+import 'package:mobile_one/login.dart'; // Imports your login page
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Shrine Login Page smoke test', (WidgetTester tester) async {
+    // 1. Build our LoginPage inside a MaterialApp wrapper and trigger a frame.
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: LoginPage(),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // 2. Verify that the 'SHRINE' text widget is present on the screen.
+    expect(find.text('SHRINE'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
+    // 3. Verify that the asset image exists in the widget tree.
+    expect(find.byType(Image), findsOneWidget);
+    
+    // 4. Verify that the counter app text does NOT exist here.
     expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
   });
 }
