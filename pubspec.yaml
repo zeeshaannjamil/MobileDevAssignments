@@ -59,6 +59,12 @@ flutter:
 
   assets:
     - assets/diamond.png
+    - assets/handbag.jpg
+    - assets/shawl.jpg
+    - assets/cupboard.jpg
+    - assets/blanket.jpg
+    - assets/wire.jpg
+    - assets/phonecover.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

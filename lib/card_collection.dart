@@ -169,17 +169,14 @@ class PortalMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
-    final List<Map<String, String>> products = [
-      {
-        'name': 'Premium Handbag', 
-        'price': 'Rs. 12,000', // Configured to standard Pakistani local formatting rules
-        'image': 'assets/handbag.jpg',
-      },
-      {
-        'name': 'Traditional Shawl', 
-        'price': 'Rs. 5,800',
-        'image': 'assets/shawl.jpg',
-      },
+    // --- CONFIGURABLE LOCAL PRODUCT DATA MAP ---
+    final List<Map<String, String>> multiCollection = [
+      {'name': 'Premium Handbag', 'price': 'Rs. 12,000', 'image': 'assets/handbag.jpg'},
+      {'name': 'Traditional Shawl', 'price': 'Rs. 5,800', 'image': 'assets/shawl.jpg'},
+      {'name': 'Wooden Cupboard', 'price': 'Rs. 45,000', 'image': 'assets/cupboard.jpg'},
+      {'name': 'Matte Phone Cover', 'price': 'Rs. 1,200', 'image': 'assets/phonecover.jpg'},
+      {'name': 'Quilted Blanket', 'price': 'Rs. 8,500', 'image': 'assets/blanket.jpg'},
+      {'name': 'Extension Wire', 'price': 'Rs. 950', 'image': 'assets/wire.jpg'},
     ];
 
     return Scaffold(
@@ -204,107 +201,106 @@ class PortalMainScreen extends StatelessWidget {
           ],
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search_rounded, color: colors.primary), 
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.tune_rounded, color: colors.primary), 
-            onPressed: () {},
-          ),
+          IconButton(icon: Icon(Icons.search_rounded, color: colors.primary), onPressed: () {}),
+          IconButton(icon: Icon(Icons.tune_rounded, color: colors.primary), onPressed: () {}),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Welcome Back, Explorer',
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 16.0, 20.0, 2.0),
+            child: Text(
+              'Summer Collection 2026',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: colors.primary),
             ),
-            const SizedBox(height: 2),
-            Text(
-              'Curated collection updates for today.',
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
+              'Showing ${multiCollection.length} premium results',
               style: TextStyle(color: Colors.grey[600], fontSize: 13),
             ),
-            const SizedBox(height: 16),
-            
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  // --- IMPROVED: Compact aspect ratio tightens card dimensions ---
-                  childAspectRatio: 0.82, 
-                ),
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  final product = products[index];
-                  
-                  return Card(
-                    color: colors.surface,
-                    elevation: 1.5,
-                    clipBehavior: Clip.antiAlias,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        // --- IMPROVED: Picture container layout matches commercial e-commerce applications ---
-                        AspectRatio(
-                          aspectRatio: 1.2, // Gives the image a robust, standard presence frame
-                          child: Image.asset(
-                            product['image']!,
-                            fit: BoxFit.cover, 
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(
-                                color: colors.primary.withOpacity(0.05),
-                                child: Icon(
-                                  Icons.image_not_supported_outlined,
-                                  color: colors.primary.withOpacity(0.4),
-                                  size: 28,
-                                ),
-                              );
-                            },
-                          ),
+          ),
+          const SizedBox(height: 12),
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                // --- FIXED: Formats cards into compact, proportional grids without long white space ---
+                childAspectRatio: 0.80, 
+              ),
+              itemCount: multiCollection.length,
+              itemBuilder: (context, index) {
+                final item = multiCollection[index];
+
+                return Card(
+                  color: colors.surface,
+                  elevation: 1.5,
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      // --- FIXED: Strict frame restriction to compress image boundary ---
+                      AspectRatio(
+                        aspectRatio: 1.25,
+                        child: Image.asset(
+                          item['image']!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              color: colors.primary.withOpacity(0.05),
+                              child: Icon(
+                                Icons.image_not_supported_outlined,
+                                color: colors.primary.withOpacity(0.4),
+                                size: 28,
+                              ),
+                            );
+                          },
                         ),
-                        // --- IMPROVED: Compressed Daraz-style padding text container ---
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                      ),
+                      // --- FIXED: Daraz retail style tight label padding ---
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 4.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                product['name']!,
+                                item['name']!,
                                 style: TextStyle(
-                                  color: colors.primary, 
-                                  fontWeight: FontWeight.bold, 
+                                  color: colors.primary,
+                                  fontWeight: FontWeight.bold,
                                   fontSize: 13.0,
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              const SizedBox(height: 3.0), // Tight spacing exactly matching retail interfaces
+                              const SizedBox(height: 2.0),
                               Text(
-                                product['price']!,
+                                item['price']!,
                                 style: TextStyle(
-                                  color: colors.secondary, 
-                                  fontWeight: FontWeight.w700, 
+                                  color: colors.secondary,
+                                  fontWeight: FontWeight.w700,
                                   fontSize: 13.0,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
